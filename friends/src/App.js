@@ -1,17 +1,19 @@
 import React from 'react';
 import './App.css';
-import { Route } from "react-router-dom";
-
+import { Route, Link } from "react-router-dom";
 import LoginForm from './components/login/LoginForm';
-import RegisterForm from './components/register/RegisterForm';
+import Dashboard from './components/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Link to="/dashboard">Dashboard</Link>
 
-        <Route path="/" exact component={LoginForm} />
-        <Route exact path="/RegisterForm" component={RegisterForm} />
+        <Route exact path="/" component={LoginForm} />
+
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </header>
     </div>
   );
