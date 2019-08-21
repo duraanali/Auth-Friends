@@ -1,22 +1,25 @@
 import React from 'react';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
-class Dashboard extends React.Component {
+class FriendsList extends React.Component {
     state = {
-        friendsList: []
+        friends: []
     };
 
     componentDidMount() {
+
         this.getData();
+
     }
 
     getData = () => {
         axiosWithAuth()
             .get('http://localhost:5000/api/friends/')
             .then(res => {
-                const friendsList = res.data;
-                this.setState({ friendsList });
-                this.props.history.push('/');
+
+                const friends = res.data;
+                this.setState({ friends });
+
             })
             .catch(err => console.log(err.response));
     };
@@ -25,13 +28,14 @@ class Dashboard extends React.Component {
 
         return (
             <div>
-                <ul>
-                    {this.state.friendsList.map(friend =>
-                        <li>{friend.name}</li>)}
-                </ul>
+
+
+                {this.state.friends.map(friend =>
+                    <p key={friend.name}>{friend.name}</p>)}
+
             </div>
         );
     }
 }
 
-export default Dashboard;
+export default FriendsList;

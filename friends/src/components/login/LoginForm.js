@@ -1,6 +1,6 @@
 import React from 'react'
 import './LoginForm.css';
-
+import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 class LoginForm extends React.Component {
@@ -13,11 +13,13 @@ class LoginForm extends React.Component {
 
     handleChange = e => {
         this.setState({
+
             credentials: {
                 ...this.state.credentials,
                 [e.target.name]: e.target.value
             }
         });
+
     };
 
     login = e => {
@@ -25,14 +27,15 @@ class LoginForm extends React.Component {
         axios
             .post('http://localhost:5000/api/login', this.state.credentials)
             .then(res => {
+                console.log("login Payload", res.data.payload)
                 localStorage.setItem('token', res.data.payload);
-                this.props.history.push('/');
+                this.props.history.push('/friendslist');
             })
             .catch(err => console.log(err.response));
     };
 
     render() {
-
+        console.log(this.state.credentials)
         return (
             <div className="form-module">
                 <h2>Sign In</h2>
@@ -46,7 +49,7 @@ class LoginForm extends React.Component {
                         onChange={this.handleChange} />
 
                     <button type="submit">Sign In</button>
-
+                    <p>Would Like To Add New Friends? <Link to="/RegisterForm">Click Here</Link></p>
                 </form>
 
                 <div>
